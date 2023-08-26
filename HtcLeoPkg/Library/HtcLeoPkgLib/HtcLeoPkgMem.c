@@ -35,17 +35,7 @@ STATIC struct MSM8916PkgReservedMemory {
   EFI_PHYSICAL_ADDRESS         Offset;
   EFI_PHYSICAL_ADDRESS         Size;
 } MSM8916PkgReservedMemoryBuffer [] = {
-/**  { 0x86000000, 0x00300000 },    // tz_apps_region
-  { 0x86300000, 0x00100000 },    // smem_region
-  { 0x86400000, 0x00280000 },    // tz/hyp_region
-  { 0x86700000, 0x06C00000 },    // MPSS/EFS/DHMS/PIL_region
-**/
-/*
-  { 0x85A00000, 0x00E00000 },    // tz-apps_region
-  { 0x86800000, 0x05400000 },    // mpss_region
-  { 0x8bc00000, 0x00200000 },    // gps_region
-  { 0x8be00000, 0x00600000 },    // wcnss_region
-  { 0x8c400000, 0x00600000 },    // venus_region*/
+  //{ 0xbf700000, 0x00F00000 },    // tz_apps_region
 };
 
 /**
@@ -141,30 +131,42 @@ ArmPlatformGetVirtualMemoryMap (
 
   Index = 0;
 
+  // SRAM
+  VirtualMemoryTable[Index].PhysicalBase   = 0x10000000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x10000000;
+  VirtualMemoryTable[Index].Length         = 0x00100000;
+  VirtualMemoryTable[Index].Attributes     = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
+
+  // SOC registers region
+  VirtualMemoryTable[++Index].PhysicalBase = 0x30000000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x30000000;
+  VirtualMemoryTable[Index].Length         = 0x10000000;
+  VirtualMemoryTable[Index].Attributes     = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
+
+  // EA SPORTS
+  VirtualMemoryTable[++Index].PhysicalBase = 0x80000000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x80000000;
+  VirtualMemoryTable[Index].Length         = 0x04000000;
+  VirtualMemoryTable[Index].Attributes     = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
+
   // FD
-  //VirtualMemoryTable[Index].PhysicalBase   = 0x84000000;
-  //VirtualMemoryTable[Index].VirtualBase    = 0x84000000;
-  //VirtualMemoryTable[Index].Length         = 0x01000000;
-  //VirtualMemoryTable[Index].Attributes     = CacheAttributes;
+  VirtualMemoryTable[++Index].PhysicalBase  = 0x84000000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x84000000;
+  VirtualMemoryTable[Index].Length         = 0x00100000;
+  VirtualMemoryTable[Index].Attributes     = CacheAttributes;
 
   // Free memory
-  VirtualMemoryTable[Index].PhysicalBase   = 0x80000000;
-  VirtualMemoryTable[Index].VirtualBase    = 0x80000000;
-  VirtualMemoryTable[Index].Length         = 0x40000000;
+  VirtualMemoryTable[++Index].PhysicalBase = 0x85000000;
+  VirtualMemoryTable[Index].VirtualBase    = 0x85000000;
+  VirtualMemoryTable[Index].Length         = 0x0b000000;
   VirtualMemoryTable[Index].Attributes     = CacheAttributes;
 
   // Display reserved
-  VirtualMemoryTable[++Index].PhysicalBase = 0xbf700000;
-  VirtualMemoryTable[Index].VirtualBase    = 0xbf700000;
-  VirtualMemoryTable[Index].Length         = 0x00F00000;
+  VirtualMemoryTable[++Index].PhysicalBase = 0xaf700000;
+  VirtualMemoryTable[Index].VirtualBase    = 0xaf700000;
+  VirtualMemoryTable[Index].Length         = 0x00f00000;
   VirtualMemoryTable[Index].Attributes     = ARM_MEMORY_REGION_ATTRIBUTE_WRITE_THROUGH;
-
-  // SOC registers region
-  VirtualMemoryTable[++Index].PhysicalBase = 0x00000000;
-  VirtualMemoryTable[Index].VirtualBase    = 0x00000000;
-  VirtualMemoryTable[Index].Length         = 0x80000000;
-  VirtualMemoryTable[Index].Attributes     = ARM_MEMORY_REGION_ATTRIBUTE_DEVICE;
-
+  
   // End of Table
   VirtualMemoryTable[++Index].PhysicalBase  = 0;
   VirtualMemoryTable[Index].VirtualBase     = 0;

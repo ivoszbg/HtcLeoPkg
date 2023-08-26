@@ -42,6 +42,9 @@ PrePiMain (
   // Initialize the architecture specific bits
   ArchInitialize ();
 
+  /* Remap FB so it doesn't interfere with UEFI */
+  MmioWrite32(0x3A100000 + 0x4044, 0xaf700000);
+
   // Initialize the Serial Port
   SerialPortInitialize ();
   CharCount = AsciiSPrint (
@@ -60,10 +63,10 @@ PrePiMain (
         UefiMemoryBase,
         StacksBase
     ));
-//here
+
   // Initialize the Debug Agent for Source Level Debugging
-  //InitializeDebugAgent (DEBUG_AGENT_INIT_POSTMEM_SEC, NULL, NULL);
-  //SaveAndSetDebugTimerInterrupt (TRUE);
+  InitializeDebugAgent (DEBUG_AGENT_INIT_POSTMEM_SEC, NULL, NULL);
+  SaveAndSetDebugTimerInterrupt (TRUE);
 
   // Declare the PI/UEFI memory region
   HobList = HobConstructor (

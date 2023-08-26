@@ -110,8 +110,8 @@
 
   # System Memory (576MB)
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0x40000000
-  gArmPlatformTokenSpaceGuid.PcdSystemMemoryUefiRegionSize|0x01000000
+  gArmTokenSpaceGuid.PcdSystemMemorySize|0x10000000
+  #gArmPlatformTokenSpaceGuid.PcdSystemMemoryUefiRegionSize|0x00100000
 
   # We boot all processors here!!!!!
   gArmPlatformTokenSpaceGuid.PcdCoreCount|1
@@ -122,7 +122,7 @@
 
   # GUID of the UI app
   gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
-  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|5
+  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|1
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdResetOnMemoryTypeInformationChange|FALSE
 
@@ -140,7 +140,7 @@
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
 
-  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0xbf700000
+  gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0xaf700000
   gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|640
   gHtcLeoPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1136
 
@@ -155,7 +155,7 @@
   #
   # PEI Phase modules
   #
-  ArmPlatformPkg/PrePi/PeiUniCore.inf
+  HtcLeoPkg/PrePi/PeiUniCore.inf
 
   #
   # DXE
@@ -186,7 +186,7 @@
 
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 
-  # ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
+  # HtcLeoPkg/Drivers/InterruptDxe/InterruptDxe.inf
   # ArmPkg/Drivers/TimerDxe/TimerDxe.inf
 
   MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
@@ -296,7 +296,7 @@
       PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
       BcfgCommandLib|ShellPkg/Library/UefiShellBcfgCommandLib/UefiShellBcfgCommandLib.inf
     <PcdsFixedAtBuild>
-		gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0xFF
+		gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x2F
 		gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
 		gEfiMdePkgTokenSpaceGuid.PcdUefiLibMaxPrintBufferSize|8000
   }
